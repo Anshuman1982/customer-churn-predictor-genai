@@ -49,6 +49,8 @@ with col1:
     senior_citizen = st.selectbox("Senior Citizen", [0,1])
     partner = st.selectbox("Partner", ["Yes","No"])
     dependents = st.selectbox("Dependets", ["Yes", "No"])
+    phone_service = st.selectbox("Phone Service", ["Yes", "No"])
+    multiple_lines = st.selectbox("Multiple Lines", ["Yes", "No", "No phone service"])
 
 with col2:
     tenure = st.slider("Tenure (Months)", 0, 72, 12)
@@ -75,8 +77,11 @@ st.markdown("---")
 
 
 #now preprocessing the raw data from user which can be understood by our modal
-def preprocess_input(gender, senior_citizen, partner, tenure, monthly_charges,
-                     total_charges, contract, paperless_billing, payment_method, model_columns):
+def preprocess_input(gender, senior_citizen, partner, dependents, phone_service, multiple_lines,
+                     tenure, monthly_charges, total_charges, internet_service,
+                     online_security, online_backup, device_protection, tech_support,
+                     streaming_tv, streaming_movies, contract, paperless_billing,
+                     payment_method, model_columns):
 
     # Build raw input as a DataFrame
     input_dict = {
@@ -84,6 +89,8 @@ def preprocess_input(gender, senior_citizen, partner, tenure, monthly_charges,
         'SeniorCitizen': senior_citizen,
         'Partner': partner,
         'Dependents': dependents,
+        'PhoneService': phone_service,      
+        'MultipleLines': multiple_lines,    
         'tenure': tenure,
         'MonthlyCharges': monthly_charges,
         'TotalCharges': total_charges,
@@ -97,7 +104,6 @@ def preprocess_input(gender, senior_citizen, partner, tenure, monthly_charges,
         'Contract': contract,
         'PaperlessBilling': paperless_billing,
         'PaymentMethod': payment_method
-        
     }
 
     input_df = pd.DataFrame([input_dict])
@@ -113,14 +119,18 @@ def preprocess_input(gender, senior_citizen, partner, tenure, monthly_charges,
 
 if st.button("Predict Churn"):
     input_data = preprocess_input(
-        gender, senior_citizen, partner, tenure, monthly_charges,
-        total_charges, contract, paperless_billing, payment_method, model_columns
+        gender, senior_citizen, partner, dependents, phone_service, multiple_lines,
+        tenure, monthly_charges,
+        total_charges, internet_service, online_security, online_backup,
+        device_protection, tech_support, streaming_tv, streaming_movies,
+        contract, paperless_billing, payment_method, model_columns
     )
 
     probability = model.predict_proba(input_data)[0][1]
 
-    threshold = 0.25  # Tune this if needed
+    threshold = 0.25
     prediction = 1 if probability >= threshold else 0
+
 
 # Diagnostic prints
     st.write("🔍 Raw Churn Probability:", probability)
