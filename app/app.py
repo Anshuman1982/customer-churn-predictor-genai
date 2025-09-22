@@ -131,6 +131,7 @@ if st.button("Predict Churn"):
     threshold = 0.25
     prediction = 1 if probability >= threshold else 0
 
+   
 
 # Diagnostic prints
     st.write("🔍 Raw Churn Probability:", probability)
