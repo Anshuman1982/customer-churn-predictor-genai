@@ -7,7 +7,7 @@ It’s a complete end-to-end solution — from preprocessing and model training 
 **🎥 Demo**
 
 
-![Demo](demo/churnpredictor demo - Copy.gif)
+![Demo](demo/demo.gif)
 
 **🚀 What This App Does**
 
